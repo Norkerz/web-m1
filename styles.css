@@ -98,3 +98,15 @@ body {
 .cell:hover {
     background-color: #475569;
 }
+
+.cell.bug {
+    background-color: #ef4444;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.cell.bug::after {
+    content: '🐛';
+    font-size: 2rem;
+}
