@@ -9,6 +9,7 @@ let timeLeft = 30;
 let gameStarted = false;
 let bugIntervalId = null;
 let timerIntervalId = null;
+let currentBugSpeed = 1000;
 
 function getRandomCellIndex() {
     let newIndex;
@@ -27,6 +28,13 @@ function moveBug() {
     cells[currentCellIndex].classList.add('bug');
 }
 
+function getBugIntervalSpeed(currentScore) {
+    if (currentScore >= 15) return 450;
+    if (currentScore >= 10) return 600;
+    if (currentScore >= 5) return 800;
+    return 1000;
+}
+
 function endGame() {
     gameStarted = false;
 
@@ -35,6 +43,7 @@ function endGame() {
     clearInterval(timerIntervalId);
     bugIntervalId = null;
     timerIntervalId = null;
+    currentBugSpeed = 1000;
 
     // Eliminar bug visible del tablero
     if (currentCellIndex !== null) {
@@ -42,8 +51,9 @@ function endGame() {
         currentCellIndex = null;
     }
 
-    // Cambiar texto del botón
+    // Cambiar texto del botón y reactivarlo
     startBtn.textContent = 'Jugar de nuevo';
+    startBtn.disabled = false;
 }
 
 // Manejador de clics en las celdas
@@ -54,6 +64,14 @@ cells.forEach((cell, index) => {
         if (index === currentCellIndex) {
             score++;
             scoreDisplay.textContent = score;
+
+            const newSpeed = getBugIntervalSpeed(score);
+            if (newSpeed !== currentBugSpeed) {
+                currentBugSpeed = newSpeed;
+                clearInterval(bugIntervalId);
+                bugIntervalId = setInterval(moveBug, currentBugSpeed);
+            }
+
             moveBug();
         }
     });
@@ -67,17 +85,19 @@ startBtn.addEventListener('click', () => {
     clearInterval(bugIntervalId);
     clearInterval(timerIntervalId);
 
-    // Reiniciar estado, puntuación y tiempo
+    // Reiniciar estado, puntuación, tiempo y velocidad
     gameStarted = true;
     score = 0;
     timeLeft = 30;
+    currentBugSpeed = 1000;
     scoreDisplay.textContent = score;
     timerDisplay.textContent = timeLeft;
-    startBtn.textContent = 'Jugar de nuevo';
+    startBtn.textContent = 'Jugando...';
+    startBtn.disabled = true;
 
     // Iniciar juego
     moveBug();
-    bugIntervalId = setInterval(moveBug, 1000);
+    bugIntervalId = setInterval(moveBug, currentBugSpeed);
 
     timerIntervalId = setInterval(() => {
         timeLeft--;
