@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caza al Bug</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="app.js" defer></script>
+</head>
+<body>
+    <main class="game-container">
+        <header class="game-header">
+            <h1>Caza al Bug</h1>
+            <div class="game-info">
+                <div class="stat-box">
+                    <span>Puntos:</span>
+                    <span id="score">0</span>
+                </div>
+                <div class="stat-box">
+                    <span>Tiempo:</span>
+                    <span id="timer">30</span>s
+                </div>
+            </div>
+        </header>
+
+        <section class="game-controls">
+            <button id="start-btn" class="btn-primary">Jugar</button>
+        </section>
+
+        <div class="grid" id="game-grid">
+            <div class="cell" data-index="0"></div>
+            <div class="cell" data-index="1"></div>
+            <div class="cell" data-index="2"></div>
+            <div class="cell" data-index="3"></div>
+            <div class="cell" data-index="4"></div>
+            <div class="cell" data-index="5"></div>
+            <div class="cell" data-index="6"></div>
+            <div class="cell" data-index="7"></div>
+            <div class="cell" data-index="8"></div>
+        </div>
+    </main>
+</body>
+</html>
